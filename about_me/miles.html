@@ -1,13 +1,82 @@
 <title>Miles' Page</title>
-<h1>I'm cooler than Ali.</h1>
-<img src="https://www.dreamstime.com/photos-images/donald-glover.html">
-<h1 style="font-size:11px">this is ali btw.</h1>
-<script>
-  var buttonPresses = 0;
+<body style="font-family: 'Manrope', sans-serif; margin-left: 50px; margin-top: 40px;">
+  <link href="https://fonts.googleapis.com/css?family=Manrope:400,700&display=swap" rel="stylesheet">
+  <h1 style="font-size: 36;">Miles' Introduction Page</h1>
+  <p style="font-size: 24; margin-bottom: 0px;">I love coding, math and most importantly, I'm cooler than Ali.<p>
+  <div style="margin: 5px;">
+    <img name = "aliImage" style="width: 150px; height: 150px; border: 3px; border-color: cornflowerblue; border-style: solid;" src="https://imgs.search.brave.com/vrdy39cIOJAtQE8PuURX7I3pItjHWUN9LrMTEaLO3x4/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9leHRl/cm5hbC1wcmV2aWV3/LnJlZGQuaXQvZG9u/YWxkLWdsb3Zlci1h/ZGRyZXNzZXMtcnVt/b3ItaGlzLXNjaGVk/dWxlLWlzLWhvbGRp/bmctdXAtdjAtMHda/ZmdyZC13VVNaREc3/Q05FaFhJNktLd01U/M2lGcFdaVzVNZVRn/VDVyMC5qcGc_YXV0/bz13ZWJwJnM9MTZj/NWFkZGFkYTRkOWI5/NTIxYzY1MDc3NTk0/YWM2NDc3MjgzNmQw/NQ">
+  </div>
+  <div>
+  <p style="font-size:24px">this is ali btw.</p>
+  </div>
+  <script>
+    var buttonPresses = 0;
 
-  function buttonFunction(){
-    buttonPresses++;
-    alert("You've pressed the button " + buttonPresses + " times!");
-  }
-</script>
-<button onclick = "buttonFunction()"></button>
+    function buttonFunction(){
+      buttonPresses++;
+      document.aliImage.style.width = (150 + 0.5*buttonPresses) + "px";
+      document.aliImage.style.height = (150 + 0.5*buttonPresses) + "px";
+      document.getElementsByName("buttonText")[0].innerText = "You've clicked the button " + buttonPresses + " times.";
+      if(buttonPresses == 1){
+        document.getElementsByName("buttonText")[0].innerText = "You've clicked the button " + buttonPresses + " time.";
+      }
+    }
+
+    const colors = [
+      "rgb(92, 190, 255)",
+      "rgb(163, 213, 255)",
+      "rgb(131, 201, 244)",
+      "rgb(146, 149, 221)",
+      "rgb(130, 143, 195)"  
+    ];
+
+    let colorNum = 0;
+    let timer = 5000;
+
+    function parseRGB(str) {
+      return str.match(/\d+/g).map(Number);
+    }
+
+    function animateBg(r1, g1, b1, r2, g2, b2) {
+      let steps = timer / 10;
+      let rdist = (r2 - r1) / steps;
+      let gdist = (g2 - g1) / steps;
+      let bdist = (b2 - b1) / steps;
+      for (let i = 0; i <= steps; i++) {
+        setTimeout(function() {
+          let r = Math.round(r1 + rdist * i);
+          let g = Math.round(g1 + gdist * i);
+          let b = Math.round(b1 + bdist * i);
+          document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
+        }, 10 * i);
+      }
+    }
+
+    function updateBg() {
+      let c1 = parseRGB(colors[colorNum % colors.length]);
+      let c2 = parseRGB(colors[(colorNum + 1) % colors.length]);
+      animateBg(c1[0], c1[1], c1[2], c2[0], c2[1], c2[2]);
+      colorNum++;
+    }
+
+    window.addEventListener('load', function () {
+      updateBg();
+      setInterval(updateBg, timer);
+    });
+
+    var aliPos = 0;
+    function moveAli(){
+      aliPos += 0.01;
+      document.aliImage.style.marginLeft = (Math.cos(aliPos)+1)*300 + "px";
+    }
+    setInterval(moveAli, 10);
+  </script>
+  <button style="width: 90px; height: 30px;" onclick = "buttonFunction()">Click Me!</button>
+  <p name = "buttonText">You've clicked the button 0 times.</p>
+
+
+  <footer style="position: absolute; bottom: 40px; left: 50px;">
+    <p>Copyright &copy; Miles Johnson, 2008 </p>
+    <p>Reach out at <a href="mailto:johnm260@isd271.org">johnm260@isd271.org</a></p>
+</body>
+
